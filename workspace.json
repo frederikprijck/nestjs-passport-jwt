@@ -1,0 +1,234 @@
+{
+  "version": 2,
+  "projects": {
+    "example": {
+      "root": "apps/example",
+      "sourceRoot": "apps/example/src",
+      "projectType": "application",
+      "prefix": "example",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/example",
+            "main": "apps/example/src/main.ts",
+            "tsConfig": "apps/example/tsconfig.app.json",
+            "assets": [
+              "apps/example/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/example/src/environments/environment.ts",
+                  "with": "apps/example/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "example:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/example/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/example"
+          ],
+          "options": {
+            "jestConfig": "apps/example/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "example-ui": {
+      "root": "apps/example-ui",
+      "sourceRoot": "apps/example-ui/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/example-ui",
+            "index": "apps/example-ui/src/index.html",
+            "main": "apps/example-ui/src/main.tsx",
+            "polyfills": "apps/example-ui/src/polyfills.ts",
+            "tsConfig": "apps/example-ui/tsconfig.app.json",
+            "assets": [
+              "apps/example-ui/src/favicon.ico",
+              "apps/example-ui/src/assets"
+            ],
+            "styles": [
+              "apps/example-ui/src/styles.css"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/example-ui/src/environments/environment.ts",
+                  "with": "apps/example-ui/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "example-ui:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "example-ui:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/example-ui/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/example-ui"
+          ],
+          "options": {
+            "jestConfig": "apps/example-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "example-ui-e2e": {
+      "root": "apps/example-ui-e2e",
+      "sourceRoot": "apps/example-ui-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/example-ui-e2e/cypress.json",
+            "tsConfig": "apps/example-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "example-ui:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "example-ui:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/example-ui-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "nestjs-passport-jwt": {
+      "root": "libs/nestjs-passport-jwt",
+      "sourceRoot": "libs/nestjs-passport-jwt/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/nestjs-passport-jwt/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/nestjs-passport-jwt"
+          ],
+          "options": {
+            "jestConfig": "libs/nestjs-passport-jwt/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/libs/nestjs-passport-jwt",
+            "tsConfig": "libs/nestjs-passport-jwt/tsconfig.lib.json",
+            "packageJson": "libs/nestjs-passport-jwt/package.json",
+            "main": "libs/nestjs-passport-jwt/src/index.ts",
+            "assets": [
+              "libs/nestjs-passport-jwt/*.md"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/nest"
+  },
+  "defaultProject": "example",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "css",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "css"
+      },
+      "library": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    }
+  }
+}
